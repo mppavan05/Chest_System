@@ -96,6 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68ab5f301566fee428469af1814fccd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TimeLeft: 80
+  TimerOn: 0
+  TimerTxt: {fileID: 0}
   chestData: {fileID: 11400000, guid: 23d80855e9cf95a49adfa9064ac6d2cb, type: 2}
 --- !u!61 &6435587230876142092
 BoxCollider2D:

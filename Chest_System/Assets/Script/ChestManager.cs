@@ -16,9 +16,13 @@ public class ChestManager : MonoBehaviour
     int numGems = 0;
     public Text coinText;
     public Text gemText;
+    public Text TimerText;
+    float currentTime = 0;
+    float startingTime = 0;
 
     void Start()
     {
+        currentTime = startingTime;
         chestList = new GameObject[4];
     }
     public void SpawnChests()
@@ -41,6 +45,7 @@ public class ChestManager : MonoBehaviour
     }
     void Update()
     {
+        displayTime();
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -56,6 +61,20 @@ public class ChestManager : MonoBehaviour
         }
         coinText.text = numCoins.ToString();
         gemText.text = numGems.ToString();
+
+    }
+
+
+    void displayTime()
+    {
+        currentTime += 1 * Time.deltaTime;
+        TimerText.text = currentTime.ToString("00");
+
+        if(currentTime <= 0)
+        {
+            currentTime = 0;
+        }
+
     }
 
 }
