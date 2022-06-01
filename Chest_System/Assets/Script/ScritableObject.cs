@@ -9,5 +9,6 @@ public class ScritableObject : ScriptableObject
     public int maxCoins;
     public int minGems;
     public int maxGems;
+    public int timeTaken;
 
 }

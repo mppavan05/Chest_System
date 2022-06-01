@@ -9,6 +9,7 @@ public class Chests : MonoBehaviour
     int maxCoins;
     int minGems;
     int maxGems;
+    int timeTaken;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,7 @@ public class Chests : MonoBehaviour
         maxCoins = chestData.maxCoins;
         minGems = chestData.minGems;
         maxGems = chestData.maxGems;
+        timeTaken = chestData.timeTaken;
     }
 
     public int rewardCoins()
