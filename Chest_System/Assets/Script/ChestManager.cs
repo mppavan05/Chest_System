@@ -77,4 +77,9 @@ public class ChestManager : MonoBehaviour
 
     }
 
+    IEnumerator waiting()
+    {
+        yield return new WaitForSeconds(10);
+    }
+
 }
