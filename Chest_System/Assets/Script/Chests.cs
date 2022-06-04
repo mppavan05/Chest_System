@@ -15,6 +15,8 @@ public class Chests : MonoBehaviour
     int minGems;
     int maxGems;
     int timeTaken;
+    float currentTime = 0;
+    float startingTime = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,22 @@ public class Chests : MonoBehaviour
         timeTaken = chestData.timeTaken;
     }
 
+    private void Update()
+    {
+        displayTime();
+    }
 
+    void displayTime()
+    {
+        currentTime += 1 * Time.deltaTime;
+        TimerTxt.text = currentTime.ToString("00");
+
+        if (currentTime <= 0)
+        {
+            currentTime = 0;
+        }
+
+    }
     public int rewardCoins()
     {
         return Random.Range(minCoins, maxCoins + 1);

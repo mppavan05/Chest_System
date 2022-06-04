@@ -33,34 +33,33 @@ public class ChestManager : MonoBehaviour
             {
                 int value = Random.Range(1, 51);
                 if (value >= 1 && value <= 35)
+                {
                     chestList[i] = Instantiate(commonChest, slots[i].position - new Vector3(0, 0, 1), Quaternion.identity);
+                    Debug.Log("Common chest");
+
+                }
                 else if (value >= 36 && value <= 45)
+                {
                     chestList[i] = Instantiate(rareChest, slots[i].position - new Vector3(0, 0, 1), Quaternion.identity);
+                    Debug.Log("rear chest");
+                }
                 else if (value >= 46 && value <= 49)
+                {
                     chestList[i] = Instantiate(epicChest, slots[i].position - new Vector3(0, 0, 1), Quaternion.identity);
+                    Debug.Log("epic chest");
+                }
                 else
+                {
                     chestList[i] = Instantiate(legendaryChest, slots[i].position - new Vector3(0, 0, 1), Quaternion.identity);
+                    Debug.Log("legendary chest");
+                }
             }
         }
     }
     void Update()
     {
         displayTime();
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            if (hit.collider != null)
-            {
-                if (hit.transform.gameObject.tag == "Chest")
-                {
-                    numCoins += hit.transform.gameObject.GetComponent<Chests>().rewardCoins();
-                    numGems += hit.transform.gameObject.GetComponent<Chests>().rewardGems();
-                    Destroy(hit.transform.gameObject);
-                }
-            }
-        }
-        coinText.text = numCoins.ToString();
-        gemText.text = numGems.ToString();
+        DestroyChest();
 
     }
 
@@ -77,9 +76,70 @@ public class ChestManager : MonoBehaviour
 
     }
 
+
+    void DestroyChest()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit.collider != null)
+            {
+                if (hit.transform.gameObject.tag == "Common")
+                {
+                    numCoins += hit.transform.gameObject.GetComponent<Chests>().rewardCoins();
+                    numGems += hit.transform.gameObject.GetComponent<Chests>().rewardGems();
+                    Destroy(hit.transform.gameObject, 2f);
+                }
+
+                else if (hit.transform.gameObject.tag == "Rare")
+                {
+                    numCoins += hit.transform.gameObject.GetComponent<Chests>().rewardCoins();
+                    numGems += hit.transform.gameObject.GetComponent<Chests>().rewardGems();
+                    Destroy(hit.transform.gameObject, 4f);
+                }
+
+                else if (hit.transform.gameObject.tag == "Epic")
+                {
+                    numCoins += hit.transform.gameObject.GetComponent<Chests>().rewardCoins();
+                    numGems += hit.transform.gameObject.GetComponent<Chests>().rewardGems();
+                    Destroy(hit.transform.gameObject, 6f);
+                }
+
+                else if (hit.transform.gameObject.tag == "Legend")
+                {
+                    numCoins += hit.transform.gameObject.GetComponent<Chests>().rewardCoins();
+                    numGems += hit.transform.gameObject.GetComponent<Chests>().rewardGems();
+                    Destroy(hit.transform.gameObject, 8f);
+                }
+            }
+        }
+        coinText.text = numCoins.ToString();
+        gemText.text = numGems.ToString();
+
+    }
+
     IEnumerator waiting()
     {
         yield return new WaitForSeconds(10);
     }
+
+  
+    /*private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Common")
+        {
+            Destroy(gameObject, 5f);
+        }
+    }
+
+
+    private void OnMouseDown()
+    {
+        if (gameObject.tag == "Common")
+        {
+            Destroy(gameObject, 5f);
+        }
+
+    }*/
 
 }
