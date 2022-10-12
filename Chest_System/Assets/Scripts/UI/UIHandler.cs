@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIHandler : SingletonGeneric<UIHandler>
 {
@@ -20,7 +21,7 @@ public class UIHandler : SingletonGeneric<UIHandler>
     [SerializeField]
     public GameObject rewardPopup;
     [SerializeField]
-    public Text rewardReceivedText;
+    public TMP_Text rewardReceivedText;
 
 
 
