@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ChestView : MonoBehaviour
 {
-    public ChestController chestController;
+    private ChestController _chestController;
     [HideInInspector]
     public Slot slotReference;
 
@@ -25,7 +25,7 @@ public class ChestView : MonoBehaviour
 
     public void SetControllerReference(ChestController chestController)
     {
-        this.chestController = chestController;
+        this._chestController = chestController;
     }
 
     private void Start()
@@ -33,7 +33,7 @@ public class ChestView : MonoBehaviour
         InitializeEmptyChestView();
     }
 
-    public void InitializeEmptyChestView()
+    private void InitializeEmptyChestView()
     {
         chestTimerTxt.gameObject.SetActive(false);
         chestSlotSprite.sprite = EmptySlotSprite;
@@ -49,25 +49,25 @@ public class ChestView : MonoBehaviour
     public void InitialiseViewUIForLockedChest()
     {
         chestTimerTxt.gameObject.SetActive(false);
-        chestSlotSprite.sprite = chestController.chestModel.ChestSprite;
+        chestSlotSprite.sprite = _chestController.chestModel.ChestSprite;
         chestTypeTxt.gameObject.SetActive(true);
-        chestTypeTxt.text = chestController.chestModel.ChestName;
+        chestTypeTxt.text = _chestController.chestModel.ChestName;
         coinImage.gameObject.SetActive(true);
         coinsTxt.gameObject.SetActive(true);
-        coinsTxt.text = chestController.chestModel.CoinCost.ToString();
+        coinsTxt.text = _chestController.chestModel.CoinCost.ToString();
         gemImage.gameObject.SetActive(true);
         gemsTxt.gameObject.SetActive(true);
-        gemsTxt.text = chestController.GetGemCost().ToString();
+        gemsTxt.text = _chestController.GetGemCost().ToString();
         ChestButton.enabled = true;
         currentState = ChestState.Locked;
     }
 
-    public void InitialiseViewUIForUnlockingChest()
+    private void InitialiseViewUIForUnlockingChest()
     {
         chestTimerTxt.gameObject.SetActive(true);
-        chestSlotSprite.sprite = chestController.chestModel.ChestSprite;
+        chestSlotSprite.sprite = _chestController.chestModel.ChestSprite;
         chestTypeTxt.gameObject.SetActive(true);
-        chestTypeTxt.text = chestController.chestModel.ChestName;
+        chestTypeTxt.text = _chestController.chestModel.ChestName;
         coinImage.gameObject.SetActive(false);
         coinsTxt.gameObject.SetActive(false);
         gemImage.gameObject.SetActive(false);
@@ -76,12 +76,12 @@ public class ChestView : MonoBehaviour
         currentState = ChestState.Unlocking;
     }
 
-    public void InitialiseViewUIForUnlockedChest()
+    private void InitialiseViewUIForUnlockedChest()
     {
         chestTimerTxt.gameObject.SetActive(true);
-        chestSlotSprite.sprite = chestController.chestModel.ChestSprite;
+        chestSlotSprite.sprite = _chestController.chestModel.ChestSprite;
         chestTypeTxt.gameObject.SetActive(true);
-        chestTypeTxt.text = chestController.chestModel.ChestName;
+        chestTypeTxt.text = _chestController.chestModel.ChestName;
         coinImage.gameObject.SetActive(false);
         coinsTxt.gameObject.SetActive(false);
         gemImage.gameObject.SetActive(false);
@@ -101,42 +101,19 @@ public class ChestView : MonoBehaviour
             }
             else
             {
-                ChestService.Instance.selectedController = chestController;
+                ChestService.Instance.selectedController = _chestController;
                 UIHandler.Instance.ToggleUnlockChestPopup(true);
             }
-
-
-
-            /*
-            
-            0. Check if any other Chest is still unlocking usingSlotsController.isUnlocking and if yes then show the "Wait for your Chest to unlock" Popup.
-            1. Open a dialog box with option to either Start the timer through coins or Instantly open through gems.
-            2. The POPUP will open. When any button of the two is clicked in the popup, a method in view is called which checks if enough resources are there or not.
-            3. If not then a popup using UIHandler shows saying Insufficient Resources.
-            4. If enough resources are present then we will call a method EnteringUnlockingState() or OpenInstantly() from the ChestView.
-
-             */
         }
         else if (currentState == ChestState.Unlocking)
         {
-            /*
-            
-            1. Show a popup using UIHandler to UNLOCK Chest through gems(cost calculated by controller) instantly.
-            2. If option chosen then call method EnteringUnlockedState() from the ChestView.
-
-             */
+          // for popup
         }
         else if (currentState == ChestState.Unlocked)
         {
-            ChestService.Instance.selectedController = chestController;
+            ChestService.Instance.selectedController = _chestController;
             OpenChest();
             ChestService.Instance.ToggleRewardsPopup(true);
-
-            /*
-            
-            1. Call a method OpenChest() from ChestView.
-
-             */
         }
     }
 
@@ -145,7 +122,7 @@ public class ChestView : MonoBehaviour
     {
         SlotsController.Instance.isUnlocking = true;
         InitialiseViewUIForUnlockingChest();
-        StartCoroutine(chestController.StartTimer());
+        StartCoroutine(_chestController.StartTimer());
 
     }
 
@@ -153,7 +130,7 @@ public class ChestView : MonoBehaviour
     {
         InitializeEmptyChestView();
         ReceiveChestRewards();
-        ChestService.Instance.selectedController = chestController;
+        ChestService.Instance.selectedController = _chestController;
         slotReference.isEmpty = true;
         ChestService.Instance.ToggleRewardsPopup(true);
         slotReference.chestController = null;
@@ -166,7 +143,7 @@ public class ChestView : MonoBehaviour
         chestTimerTxt.text = "OPEN!";
     }
 
-    public void OpenChest()
+    private void OpenChest()
     {
         InitializeEmptyChestView();
         ReceiveChestRewards();
@@ -174,10 +151,10 @@ public class ChestView : MonoBehaviour
         slotReference.chestController = null;
     }
 
-    public void ReceiveChestRewards()
+    private void ReceiveChestRewards()
     {
-        ResourceHandler.Instance.IncreaseCoins(chestController.chestModel.CoinsReward);
-        ResourceHandler.Instance.IncreaseGems(chestController.chestModel.GemsReward);
+        ResourceHandler.Instance.IncreaseCoins(_chestController.chestModel.CoinsReward);
+        ResourceHandler.Instance.IncreaseGems(_chestController.chestModel.GemsReward);
     }
 
 

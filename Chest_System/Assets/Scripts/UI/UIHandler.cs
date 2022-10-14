@@ -40,7 +40,6 @@ public class UIHandler : SingletonGeneric<UIHandler>
         unlockChestPopup.SetActive(setActive);
         if (setActive == false)
         {
-            // Debug.Log("selected controller reference got deleted.");
             ChestService.Instance.selectedController = null;
         }
     }
@@ -49,16 +48,6 @@ public class UIHandler : SingletonGeneric<UIHandler>
     {
         insufficientResourcesPopup.SetActive(setActive);
     }
-
-
-
-
-
-
-
-
-
-
 
     public void UpdateGemsUI(int gems)
     {

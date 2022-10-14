@@ -42,17 +42,5 @@ public class ChestController
         chestView.EnteringUnlockedState();
 
     }
-
-    //public async void StartTimer()
-    //{
-    //    while (unlockTimer > 0)
-    //    {
-    //        chestView.chestTimerTxt.text = unlockTimer.ToString() + " s";
-    //        await new WaitForSeconds(1f);
-    //        unlockTimer -= 1;
-    //    }
-    //    chestView.EnteringUnlockedState();
-    //    return;
-    //}
-
+    
 }
